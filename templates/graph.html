@@ -1,0 +1,21 @@
+{% extends "fb.html" %}
+
+{% block guts %}
+<form method="post" action="/graph">
+  <label for="url">Graph API URL:</label>
+  <input name="url" type="text" value="{{ escape(q) }}"></input>
+
+  <label for="params">Extra params:</label>
+  <input name="params" type="text" value="{{ escape(params) }}"></input>
+
+  <label for="pretty">Print pretty:</label>
+  <input name="pretty" type="checkbox" {% if pretty %}checked=checked{% end %} />
+
+  <br/>
+  <label for="posts">POST params:</label><br/>
+  <textarea name="posts" rows="3" cols="60">{{ escape(posts) }}</textarea>
+
+  <br/>
+  <input type="submit" value="Run Query!" />
+</form>
+{% end %}

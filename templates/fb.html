@@ -1,0 +1,37 @@
+{% extends "default.html" %}
+
+{% block header %}
+<p>Good day, eh?
+  {% if current_user['graph'] is None %} | <a href="/login.graph">Graph API Login</a>{% end %}
+  {% if current_user['rest'] is None %} | <a href="/login.rest">REST API Login</a>{% end %}
+  {% if current_user['id'] %} | <a href="/logout">Logout</a>{% end %}
+  | <a href="/graph">Graph API</a>
+  | <a href="/rest">REST API</a>
+</p>
+  {% if not current_user['id'] %}
+  <p>Welcome to the Facebook Hacker's utility belt. You can use this tool to access Facebook's <a href="http://developers.facebook.com/">Developer APIs</a> without setting up your own web application. It supports the new <a href="http://developers.facebook.com/docs/reference/api/">Graph API</a>, the old <a href="http://developers.facebook.com/docs/reference/rest/">REST API</a>, and <a href="http://developers.facebook.com/docs/reference/fql/">FQL</a> (via the REST API <a href="http://developers.facebook.com/docs/reference/rest/fql.query/"><code>fql.query</code></a> method. Log in with your Facebook account to get started! And don't worry: none of your personal information will be saved on this server, all Facebook access data is stored in cookies on your computer, and safely encrypted. (I'm a privacy freak too. :)</p>
+  {% else %}
+  <p>Enter parameters as <code>key:value</code> pairs, separated with a colon. Separate multiple pairs with a pipe character, like so: <code>key1:val2|key2:val2</code>. Have fun!</p>
+  {% end %}
+
+  {% if hasattr(handler, 'error_message') %}
+  <pre style="color: orange">{{ escape(handler.error_message) }}</pre>
+  {% end %}
+{% end %}
+
+{% block footer %}{% end %}
+
+{% block guts %}
+{% end %}
+
+{% block results %}
+<hr />
+<pre>
+{% if pretty %}
+  {{ json.dumps(results, indent=2) }}
+{% else %}
+  {{ json.dumps(results) }}
+{% end %}
+</pre>
+
+{% end %}
